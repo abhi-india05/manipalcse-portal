@@ -46,7 +46,9 @@ public class StudentDto {
     @NotBlank(message = "Password is required")
     private String password;
 
-    // Getters and Setters
+
+
+    public StudentDto() {}
 
     public String getRollNo() {
         return rollNo;
@@ -143,4 +145,6 @@ public class StudentDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

@@ -1,4 +1,5 @@
 package manipalcse.pdc.entity;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +32,10 @@ public class Alumni {
 
     @NotBlank
     private String password;
+    private Set<Role> roles;
 
+    public Set<Role> getRoles() { return roles; }
+    public void setRoles(Set<Role> roles) { this.roles = roles; }
     public Alumni() {}
 
     public Long getAlumniId() {

@@ -4,55 +4,45 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-
 public class AlumniDto {
 
-    @NotBlank(message = "ID is required")
-    private String id;
+   
 
-    @NotBlank(message = "Name is required")
-    private String name;
+    @NotBlank(message = "First name is required")
+    private String firstName;
+
+    @NotBlank(message = "Last name is required")
+    private String lastName;
 
     @NotBlank(message = "Email is required")
-    @Email(message = "Email should be valid")
+    @Email(message = "Valid email is required")
     private String email;
 
-    @NotBlank(message = "Graduation year is required")
-    @Pattern(regexp = "^\\d{4}$", message = "Graduation year must be a 4-digit year")
-    private String graduationYear;
-
-    @NotBlank(message = "Degree is required")
-    private String degree;
-
-    @NotBlank(message = "Current position is required")
-    private String currentPosition;
+    @NotBlank(message = "Mobile number is required")
+    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid mobile number")
+    private String mobileNumber;
 
     @NotBlank(message = "Password is required")
     private String password;
 
-    // Getters and Setters
-    public String getId() {
-        return id;
+
+    public AlumniDto() {}
+
+   
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -63,27 +53,20 @@ public class AlumniDto {
         this.email = email;
     }
 
-    public String getGraduationYear() {
-        return graduationYear;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setGraduationYear(String graduationYear) {
-        this.graduationYear = graduationYear;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
-    public String getDegree() {
-        return degree;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDegree(String degree) {
-        this.degree = degree;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public void setCurrentPosition(String currentPosition) {
-        this.currentPosition = currentPosition;
-    }
 }

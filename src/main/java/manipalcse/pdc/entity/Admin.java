@@ -1,13 +1,16 @@
 package manipalcse.pdc.entity;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public class Admin {
-
-    @NotBlank(message = "Admin ID is required")
-    private String adminId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long adminId;
 
     @NotBlank(message = "First name is required")
     private String firstName;

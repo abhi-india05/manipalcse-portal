@@ -2,6 +2,7 @@ package manipalcse.pdc.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -46,7 +47,11 @@ public class Faculty {
     private List<String> courses;
 
     private String password;
+    private Set<Role> roles;
 
+    public Set<Role> getRoles() { return roles; }
+    public void setRoles(Set<Role> roles) { this.roles = roles; }
+  
     public Faculty() {}
 
     public Long getId() {
@@ -69,7 +74,7 @@ public class Faculty {
     public void setPassword(String password){
         this.password=password;
     }
-    
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

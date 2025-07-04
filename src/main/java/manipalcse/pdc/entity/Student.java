@@ -1,5 +1,6 @@
 package manipalcse.pdc.entity;
 
+import java.util.Set;
 
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
@@ -47,6 +48,11 @@ public class Student {
 
     @NotBlank(message = "Password is required")
     private String password;
+
+    private Set<Role> roles;
+
+    public Set<Role> getRoles() { return roles; }
+    public void setRoles(Set<Role> roles) { this.roles = roles; }
 
     public String getRollNo() {
         return rollNo;

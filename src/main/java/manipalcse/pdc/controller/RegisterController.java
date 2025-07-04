@@ -1,0 +1,57 @@
+package manipalcse.pdc.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import manipalcse.pdc.dto.AdminDto;
+import manipalcse.pdc.dto.AlumniDto;
+import manipalcse.pdc.dto.FacultyDto;
+import manipalcse.pdc.dto.StudentDto;
+import manipalcse.pdc.services.RegisterService;
+
+@RestController
+//@RequestMapping("/api/register")
+public class RegisterController {
+
+    @Autowired
+    private RegisterService registerService;
+
+    @PostMapping("/register/admin")
+    public ResponseEntity<?> registerAdmin(@RequestBody AdminDto adminDto) {
+        try {
+            return ResponseEntity.ok(registerService.registerAdmin(adminDto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/register/student")
+    public ResponseEntity<?> registerStudent(@RequestBody StudentDto studentDto) {
+        try {
+            return ResponseEntity.ok(registerService.registerStudent(studentDto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/register/faculty")
+    public ResponseEntity<?> registerFaculty(@RequestBody FacultyDto facultyDto) {
+        try {
+            return ResponseEntity.ok(registerService.registerFaculty(facultyDto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/register/alumni")
+    public ResponseEntity<?> registerAlumni(@RequestBody AlumniDto alumniDto) {
+        try {
+            return ResponseEntity.ok(registerService.registerAlumni(alumniDto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+}

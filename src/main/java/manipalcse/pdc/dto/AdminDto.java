@@ -6,8 +6,7 @@ import jakarta.validation.constraints.Pattern;
 
 public class AdminDto {
 
-    @NotBlank(message = "Admin ID is required")
-    private String adminId;
+
 
     @NotBlank(message = "First name is required")
     private String firstName;
@@ -27,14 +26,7 @@ public class AdminDto {
     private String mobileNumber;
 
     // Getters and Setters
-    public String getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
-    }
-
+   
     public String getFirstName() {
         return firstName;
     }
