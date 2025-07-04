@@ -1,14 +1,20 @@
 package manipalcse.pdc.entity;
 
-import java.util.Set;
+import java.util.List;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+@Entity
+@Table(name="Admin")
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +38,24 @@ public class Admin {
     private String password;
 
     
+     @ManyToMany
+    @JoinTable(
+            name = "admin_roles",
+            joinColumns = @JoinColumn(name = "admin_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
 
-     private Set<Role> roles;
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-    public Set<Role> getRoles() { return roles; }
-    public void setRoles(Set<Role> roles) { this.roles = roles; }
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     // Getters and Setters
-    public Long getAdminId() {
+    public Long getId() {
         return adminId;
     }
 

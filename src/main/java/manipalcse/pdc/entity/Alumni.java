@@ -1,10 +1,13 @@
 package manipalcse.pdc.entity;
-import java.util.Set;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -32,13 +35,23 @@ public class Alumni {
 
     @NotBlank
     private String password;
-    private Set<Role> roles;
+     @ManyToMany
+    @JoinTable(
+            name = "alumni_roles",
+            joinColumns = @JoinColumn(name = "alumni_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
 
-    public Set<Role> getRoles() { return roles; }
-    public void setRoles(Set<Role> roles) { this.roles = roles; }
-    public Alumni() {}
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-    public Long getAlumniId() {
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }    public Alumni() {}
+
+    public Long getId() {
         return alumniId;
     }
 

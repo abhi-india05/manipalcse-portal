@@ -1,8 +1,13 @@
 package manipalcse.pdc.entity;
 
-import java.util.Set;
+import java.util.List;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,6 +17,9 @@ public class Student {
     private String rollNo;
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long StudentId;
+
     @NotBlank(message = "Enrollment number is required")
     private String enrollmentNo;
 
@@ -49,10 +57,22 @@ public class Student {
     @NotBlank(message = "Password is required")
     private String password;
 
-    private Set<Role> roles;
 
-    public Set<Role> getRoles() { return roles; }
-    public void setRoles(Set<Role> roles) { this.roles = roles; }
+    @ManyToMany
+    @JoinTable(
+            name = "student_roles",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public String getRollNo() {
         return rollNo;
@@ -60,6 +80,10 @@ public class Student {
 
     public void setRollNo(String rollNo) {
         this.rollNo = rollNo;
+    }
+
+    public Long getId() {
+        return StudentId;
     }
 
     public String getEnrollmentNo() {
