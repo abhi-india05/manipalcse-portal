@@ -35,7 +35,7 @@ public class ProfileService {
         return dto;
     }
 
-    public StudentDto getStudentProfileById(String id) {
+    public StudentDto getStudentProfileById(Long id) {
         Student student = studentRepo.findById(id).orElseThrow(() -> new NotFoundException("Student not found"));
         StudentDto dto = new StudentDto();
         dto.setRollNo(student.getRollNo());

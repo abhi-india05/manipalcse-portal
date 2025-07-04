@@ -12,6 +12,6 @@ import manipalcse.pdc.entity.Faculty;
 public interface FacultyRepo extends JpaRepository<Faculty,Long> {
     List<Faculty> findAll();
     Optional<Faculty> findByEmail(String email);
-    Optional<Faculty> findById(String Id);
+    Optional<Faculty> findById(Long id);  
     
 }

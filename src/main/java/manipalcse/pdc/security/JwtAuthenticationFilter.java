@@ -3,17 +3,21 @@ package manipalcse.pdc.security;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +32,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
 @Override
-protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+protected void doFilterInternal(@NonNull HttpServletRequest request, 
+    @NonNull HttpServletResponse response, 
+    @NonNull FilterChain filterChain)
         throws ServletException, IOException {
     String jwt = parseJwt(request);
     if (jwt != null && !jwt.trim().isEmpty()) {
@@ -39,8 +45,12 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
             String staffId = jwtUtil.getStaffIdFromJwtToken(jwt);
             List<String> roles = jwtUtil.getRolesFromJwtToken(jwt);
 
-            // Set the authentication context
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(staffId, null, roles);
+           List<GrantedAuthority> authorities = roles.stream()
+    .map(SimpleGrantedAuthority::new)
+    .collect(Collectors.toList());
+
+UsernamePasswordAuthenticationToken authentication = 
+    new UsernamePasswordAuthenticationToken(staffId, null, authorities);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

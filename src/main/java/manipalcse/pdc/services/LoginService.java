@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import manipalcse.pdc.dto.LoginResponse;
@@ -37,6 +38,9 @@ public class LoginService {
     @Autowired
     private JwtUtil jwtUtil;
 
+     @Autowired
+    private PasswordEncoder passwordEncoder;  
+
     public LoginResponse login(String email, String password) {
         Admin admin = adminRepo.findByEmail(email).orElse(null);
         Alumni alumni = alumniRepo.findByEmail(email).orElse(null);
@@ -48,8 +52,8 @@ public class LoginService {
                 throw new RuntimeException("Invalid password");
             }
 
-            String Id = admin.getId();
-            List<String> roles = Collections.singletonList("ADMIN");
+            Long Id = admin.getId();
+            List<String> roles=Collections.singletonList("ADMIN");
             String jwtToken = jwtUtil.generateJwtToken(Id, roles);
 
             return new LoginResponse(jwtToken, Id, roles);
@@ -58,7 +62,7 @@ public class LoginService {
                 throw new RuntimeException("Invalid password");
             }
 
-            String Id = alumni.getId();
+            Long Id = alumni.getId();
             List<String> roles = Collections.singletonList("ALUMNI");
             String jwtToken = jwtUtil.generateJwtToken(Id, roles);
 
@@ -68,7 +72,7 @@ public class LoginService {
                 throw new RuntimeException("Invalid password");
             }
 
-            String Id = faculty.getId();
+            Long Id = faculty.getId();
             List<String> roles = Collections.singletonList("FACULTY");
             String jwtToken = jwtUtil.generateJwtToken(Id, roles);
 
@@ -78,7 +82,7 @@ public class LoginService {
                 throw new RuntimeException("Invalid password");
             }
 
-            String Id = student.getId();
+            Long Id = student.getId();
             List<String> roles = Collections.singletonList("STUDENT");
             String jwtToken = jwtUtil.generateJwtToken(Id, roles);
 

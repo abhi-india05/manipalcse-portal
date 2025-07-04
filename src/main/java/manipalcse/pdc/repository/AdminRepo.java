@@ -11,5 +11,5 @@ import manipalcse.pdc.entity.Admin;
 public interface AdminRepo extends JpaRepository<Admin,Long> {
 
      Optional<Admin> findByEmail(String email);
-     Optional<Admin> findById(String Id);
+Optional<Admin> findById(Long id);  
 }

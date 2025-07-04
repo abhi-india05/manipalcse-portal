@@ -3,18 +3,40 @@ package manipalcse.pdc.dto;
 import java.util.List;
 
 public class LoginResponse {
-    private String email;
-    private String role;
-    private String token;
-    private List<String> privileges;
 
-    // Getters and setters
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
-    public String getToken() { return token; }
-    public void setToken(String token) { this.token = token; }
-    public List<String> getPrivileges() { return privileges; }
-    public void setPrivileges(List<String> privileges) { this.privileges = privileges; }
+    private String jwtToken;
+    private Long id;
+    private List<String> roles;
+
+    public LoginResponse(String jwtToken, Long id, List<String> roles) {
+        this.jwtToken = jwtToken;
+        this.id = id;
+        this.roles = roles;
+    }
+
+    public String getJwtToken() {
+        return jwtToken;
+    }
+
+    public void setJwtToken(String jwtToken) {
+        this.jwtToken = jwtToken;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }   
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+   
 }

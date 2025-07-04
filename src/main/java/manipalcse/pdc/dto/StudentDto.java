@@ -55,7 +55,7 @@ public class StudentDto {
     }
 
     public void setRollNo(String rollNo) {
-        this.rollNo = rollNo;
+        this.rollNo  = rollNo;
     }
 
     public String getEnrollmentNo() {
