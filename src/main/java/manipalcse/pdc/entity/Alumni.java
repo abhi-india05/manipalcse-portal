@@ -1,6 +1,8 @@
 package manipalcse.pdc.entity;
+
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,34 +10,43 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
+@Table(name = "alumni")
 public class Alumni {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "alumni_id")
     private Long alumniId;
 
     @NotBlank
+    @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
 
     @NotBlank
+    @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
 
     @NotBlank
-    @Email(message="Valid email is required")
+    @Email(message = "Valid email is required")
+    @Column(name = "email", nullable = false, unique = true, length = 150)
     private String email;
-    
+
     @NotBlank
     @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid mobile number")
+    @Column(name = "mobile_number", nullable = false, unique = true, length = 10)
     private String mobileNumber;
 
     @NotBlank
+    @Column(name = "password", nullable = false)
     private String password;
-     @ManyToMany
+
+    @ManyToMany
     @JoinTable(
             name = "alumni_roles",
             joinColumns = @JoinColumn(name = "alumni_id"),
@@ -49,7 +60,9 @@ public class Alumni {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }    public Alumni() {}
+    }
+
+    public Alumni() {}
 
     public Long getId() {
         return alumniId;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import manipalcse.pdc.entity.Student;
 
 @Repository
-public interface StudentRepo extends JpaRepository<Student,String> {
+public interface StudentRepo extends JpaRepository<Student,Long> {
 
     Optional<Student> findByEmail(String email);
 

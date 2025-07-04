@@ -1,24 +1,37 @@
 package manipalcse.pdc.entity;
 
+import java.util.Objects;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "roles")
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
     @Enumerated(EnumType.STRING)
-    private RoleType roleType;
+    @Column(unique = true, nullable = false, length = 20)
+    private RoleType name;
 
+    // Constructors
+    public Role() {
+    }
+
+    public Role(RoleType name) {
+        this.name = name;
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -27,19 +40,34 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
+    public RoleType getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(RoleType name) {
         this.name = name;
     }
 
-    public RoleType getRoleType() {
-        return roleType;
+    // Equals and HashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Objects.equals(id, role.id) && name == role.name;
     }
 
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
+    // ToString
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name=" + name +
+                '}';
     }
 }
