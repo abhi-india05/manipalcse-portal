@@ -1,5 +1,7 @@
 package manipalcse.pdc.entity;
 
+import java.util.Set;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,20 +23,27 @@ public class Admin {
     @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
     private String email;
-
-    @NotBlank(message = "Password is required")
-    private String password;
-
+    
     @NotBlank(message = "Mobile number is required")
     @Pattern(regexp = "^[6-9]\\d{9}$", message = "Mobile number must be a valid 10-digit Indian number")
     private String mobileNumber;
 
+    @NotBlank(message = "Password is required")
+    private String password;
+
+    
+
+     private Set<Role> roles;
+
+    public Set<Role> getRoles() { return roles; }
+    public void setRoles(Set<Role> roles) { this.roles = roles; }
+
     // Getters and Setters
-    public String getAdminId() {
+    public Long getAdminId() {
         return adminId;
     }
 
-    public void setAdminId(String adminId) {
+    public void setAdminId(Long adminId) {
         this.adminId = adminId;
     }
 

@@ -1,4 +1,4 @@
-package manipalcse.pdc.controller;
+package manipalcse.pdc.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import manipalcse.pdc.dto.AdminDto;
+import manipalcse.pdc.dto.AlumniDto;
+import manipalcse.pdc.dto.FacultyDto;
+import manipalcse.pdc.dto.StudentDto;
 import manipalcse.pdc.security.JwtUtil;
 import manipalcse.pdc.services.ProfileService;
 
@@ -16,25 +20,47 @@ public class ProfileController {
     @Autowired private ProfileService profileService;
     @Autowired private JwtUtil jwtUtil;
 
+
     @GetMapping("/admin/{id}/profile")
     public ResponseEntity<?> getAdminProfile(@PathVariable Long id, Authentication authentication) {
-        return ResponseEntity.ok(profileService.getAdminProfileById(id));
+        try {
+            AdminDto dto = profileService.getAdminProfileById(id);
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/student/{id}/profile")
     public ResponseEntity<?> getStudentProfile(@PathVariable Long id, Authentication authentication) {
-        return ResponseEntity.ok(profileService.getStudentProfileById(id));
+        try {
+            StudentDto dto = profileService.getStudentProfileById(id);
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/faculty/{id}/profile")
     public ResponseEntity<?> getFacultyProfile(@PathVariable Long id, Authentication authentication) {
-        return ResponseEntity.ok(profileService.getFacultyProfileById(id));
+        try {
+            FacultyDto dto = profileService.getFacultyProfileById(id);
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/alumni/{id}/profile")
     public ResponseEntity<?> getAlumniProfile(@PathVariable Long id, Authentication authentication) {
-        return ResponseEntity.ok(profileService.getAlumniProfileById(id));
+        try {
+            AlumniDto dto = profileService.getAlumniProfileById(id);
+            
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-  
-}
+   
+    }

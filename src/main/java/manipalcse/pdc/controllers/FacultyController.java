@@ -1,4 +1,4 @@
-package manipalcse.pdc.controller;
+package manipalcse.pdc.controllers;
 
 import java.util.List;
 

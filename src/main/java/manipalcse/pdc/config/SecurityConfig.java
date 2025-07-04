@@ -52,24 +52,22 @@ public class SecurityConfig {
             .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
             .authorizeHttpRequests(authz -> authz
                 // Public endpoints
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/debug/**").permitAll()
-                .requestMatchers("/error").permitAll()
-                .requestMatchers("/actuator/health").permitAll()
+                .requestMatchers("/login/**").permitAll()
+                .requestMatchers("/faculty/view").permitAll()
+                .requestMatchers("/register/**").permitAll()
+                //.requestMatchers("/error").permitAll()
+                //.requestMatchers("/actuator/health").permitAll()
                 
                 // Test endpoints
-                .requestMatchers("/api/test/secured").authenticated()
-                .requestMatchers("/api/test/faculty-only").hasRole("FACULTY")
+               // .requestMatchers("/api/test/secured").authenticated()
+               // .requestMatchers("/api/test/faculty-only").hasRole("FACULTY")
                 
                 // Secured endpoints with role-based access
-                .requestMatchers("/api/secure/slot-preferences/view/**").hasAnyRole("FACULTY", "ADMIN", "HOD", "CCC")
-                .requestMatchers("/api/secure/slot-preferences/select/**").hasRole("FACULTY")
-                .requestMatchers("/api/secure/slot-preferences/remove/**").hasRole("FACULTY")
-                .requestMatchers("/api/secure/slot-preferences/available").hasRole("FACULTY")
-                .requestMatchers("/api/secure/slot-preferences/duty-info").hasAnyRole("FACULTY", "HOD", "CCC", "ADMIN")
-                .requestMatchers("/api/secure/slot-preferences/selected").hasAnyRole("FACULTY", "HOD", "CCC", "ADMIN")
-                .requestMatchers("/api/secure/slot-preferences/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/secure/staff-eligibility/**").hasAnyRole("FACULTY", "ADMIN", "HOD", "CCC")
+                .requestMatchers("/faculty/{id}/profile/**").hasAnyRole("FACULTY")
+                .requestMatchers("/student/{id}/profile/**").hasRole("STUDENT")
+                .requestMatchers("/admin/{id}/profile**").hasRole("ADMIN")
+                .requestMatchers("/alumni/{id}/profile").hasRole("ALUMNI")
+                
                 
                 // All other requests need authentication
                 .anyRequest().authenticated()
