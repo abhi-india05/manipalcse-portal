@@ -31,17 +31,21 @@ public class RegisterService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String registerAdmin(AdminDto adminDto) {
-        if (adminRepo.findByEmail(adminDto.getEmail()).isPresent()) {
-            throw new RuntimeException("Admin with this email already exists");
-        }
-        Admin admin = new Admin();
-        admin.setEmail(adminDto.getEmail());
-        admin.setPassword(passwordEncoder.encode(adminDto.getPassword()));
-        
-        adminRepo.save(admin);
-        return "Admin registered successfully";
+public String registerAdmin(AdminDto adminDto) {
+    if (adminRepo.findByEmail(adminDto.getEmail()).isPresent()) {
+        throw new RuntimeException("Admin with this email already exists");
     }
+
+    Admin admin = new Admin();
+    admin.setFirstName(adminDto.getFirstName());
+    admin.setLastName(adminDto.getLastName());  
+    admin.setMobileNumber(adminDto.getMobileNumber());
+    admin.setEmail(adminDto.getEmail());
+    admin.setPassword(passwordEncoder.encode(adminDto.getPassword()));
+    
+    adminRepo.save(admin); 
+    return "Admin registered successfully";
+}
 
     public String registerStudent(StudentDto studentDto) {
         if (studentRepo.findByEmail(studentDto.getEmail()).isPresent()) {

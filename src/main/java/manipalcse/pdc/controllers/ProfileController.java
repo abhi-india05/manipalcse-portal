@@ -2,6 +2,7 @@ package manipalcse.pdc.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ public class ProfileController {
 
 
     @GetMapping("/admin/{id}/profile")
+    @PreAuthorize("hasRole('ADMIN') and #id == authentication.principal.id")
     public ResponseEntity<?> getAdminProfile(@PathVariable Long id, Authentication authentication) {
         try {
             AdminDto dto = profileService.getAdminProfileById(id);
@@ -32,6 +34,7 @@ public class ProfileController {
     }
 
     @GetMapping("/student/{id}/profile")
+    @PreAuthorize("hasRole('STUDENT') and #id == authentication.principal.id")
     public ResponseEntity<?> getStudentProfile(@PathVariable Long id, Authentication authentication) {
         try {
             StudentDto dto = profileService.getStudentProfileById(id);
@@ -42,6 +45,7 @@ public class ProfileController {
     }
 
     @GetMapping("/faculty/{id}/profile")
+    @PreAuthorize("hasRole('FACULTY') and #id == authentication.principal.id")
     public ResponseEntity<?> getFacultyProfile(@PathVariable Long id, Authentication authentication) {
         try {
             FacultyDto dto = profileService.getFacultyProfileById(id);
@@ -52,6 +56,7 @@ public class ProfileController {
     }
 
     @GetMapping("/alumni/{id}/profile")
+    @PreAuthorize("hasRole('ALUMNI') and #id == authentication.principal.id")
     public ResponseEntity<?> getAlumniProfile(@PathVariable Long id, Authentication authentication) {
         try {
             AlumniDto dto = profileService.getAlumniProfileById(id);
