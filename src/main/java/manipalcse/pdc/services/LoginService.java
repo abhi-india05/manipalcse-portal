@@ -63,7 +63,7 @@ public class LoginService {
             }
 
             Long Id = alumni.getId();
-            List<String> roles = Collections.singletonList("ALUMNI");
+            List<String> roles = Collections.singletonList("ROLE_ALUMNI");
             String jwtToken = jwtUtil.generateJwtToken(Id, roles);
 
             return new LoginResponse(jwtToken, Id, roles);
@@ -73,7 +73,7 @@ public class LoginService {
             }
 
             Long Id = faculty.getId();
-            List<String> roles = Collections.singletonList("FACULTY");
+            List<String> roles = Collections.singletonList("ROLE_FACULTY");
             String jwtToken = jwtUtil.generateJwtToken(Id, roles);
 
             return new LoginResponse(jwtToken, Id, roles);
@@ -83,7 +83,7 @@ public class LoginService {
             }
 
             Long Id = student.getId();
-            List<String> roles = Collections.singletonList("STUDENT");
+            List<String> roles = Collections.singletonList("ROLE_STUDENT");
             String jwtToken = jwtUtil.generateJwtToken(Id, roles);
 
             return new LoginResponse(jwtToken, Id, roles);
