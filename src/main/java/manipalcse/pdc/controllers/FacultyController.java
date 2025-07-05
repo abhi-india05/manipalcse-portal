@@ -13,13 +13,12 @@ import manipalcse.pdc.dto.FacultyDetailsDto;
 import manipalcse.pdc.services.FacultyService;
 
 @RestController
-//@RequestMapping("/api/faculty")
 public class FacultyController {
 
     @Autowired
     private FacultyService facultyService;
 
-    @GetMapping("/faculty")
+    @GetMapping("/faculty/view")
     @PreAuthorize("permitAll()") 
     public ResponseEntity<List<FacultyDetailsDto>> getAllFaculty() {
         return ResponseEntity.ok(facultyService.getAllFacultyDetails());

@@ -176,19 +176,43 @@ public class JwtUtil {
     }
 
     // Convenience methods for each role
-    public boolean isAdmin(Authentication authentication, Long pathId) {
-        return hasAccess(authentication, pathId, "ROLE_ADMIN");
+public boolean isAdmin(Authentication authentication, Long pathId) {
+    if (authentication == null || !authentication.isAuthenticated()) {
+        return false;
     }
+    String authId = authentication.getName();
+    return authentication.getAuthorities().stream()
+           .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) 
+           && authId.equals(pathId.toString());
+}
 
     public boolean isFaculty(Authentication authentication, Long pathId) {
-        return hasAccess(authentication, pathId, "ROLE_FACULTY");
+    if (authentication == null || !authentication.isAuthenticated()) {
+        return false;
     }
+    String authId = authentication.getName();
+    return authentication.getAuthorities().stream()
+           .anyMatch(a -> a.getAuthority().equals("ROLE_FACULTY")) 
+           && authId.equals(pathId.toString());
+}
 
-    public boolean isStudent(Authentication authentication, Long pathId) {
-        return hasAccess(authentication, pathId, "ROLE_STUDENT");
+public boolean isStudent(Authentication authentication, Long pathId) {
+    if (authentication == null || !authentication.isAuthenticated()) {
+        return false;
     }
+    String authId = authentication.getName();
+    return authentication.getAuthorities().stream()
+           .anyMatch(a -> a.getAuthority().equals("ROLE_STUDENT")) 
+           && authId.equals(pathId.toString());
+}
 
-    public boolean isAlumni(Authentication authentication, Long pathId) {
-        return hasAccess(authentication, pathId, "ROLE_ALUMNI");
+public boolean isAlumni(Authentication authentication, Long pathId) {
+    if (authentication == null || !authentication.isAuthenticated()) {
+        return false;
     }
+    String authId = authentication.getName();
+    return authentication.getAuthorities().stream()
+           .anyMatch(a -> a.getAuthority().equals("ROLE_ALUMNI")) 
+           && authId.equals(pathId.toString());
+}
 }
