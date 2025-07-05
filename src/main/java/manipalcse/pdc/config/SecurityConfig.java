@@ -65,10 +65,10 @@ public class SecurityConfig {
                // .requestMatchers("/api/test/faculty-only").hasRole("FACULTY")
                 
                 // Secured endpoints with role-based access
-                .requestMatchers("/faculty/{id}/profile/**").hasAnyRole("FACULTY")
-                .requestMatchers("/student/{id}/profile/**").hasRole("STUDENT")
-                .requestMatchers("/admin/{id}/profile**").hasRole("ADMIN")
-                .requestMatchers("/alumni/{id}/profile").hasRole("ALUMNI")
+                .requestMatchers("/faculty/{id}/profile/**").hasAuthority("ROLE_FACULTY")
+                .requestMatchers("/student/{id}/profile/**").hasAuthority("ROLE_STUDENT")
+                .requestMatchers("/admin/{id}/profile**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/alumni/{id}/profile").hasAuthority("ROLE_ALUMNI")
                 
                 
                 // All other requests need authentication

@@ -53,7 +53,7 @@ public class LoginService {
             }
 
             Long Id = admin.getId();
-            List<String> roles=Collections.singletonList("ADMIN");
+            List<String> roles=Collections.singletonList("ROLE_ADMIN");
             String jwtToken = jwtUtil.generateJwtToken(Id, roles);
 
             return new LoginResponse(jwtToken, Id, roles);

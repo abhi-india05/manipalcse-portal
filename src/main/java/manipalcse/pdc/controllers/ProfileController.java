@@ -23,7 +23,7 @@ public class ProfileController {
 
 
     @GetMapping("/admin/{id}/profile")
-    @PreAuthorize("hasRole('ADMIN') and #id == authentication.principal.id")
+    @PreAuthorize("@jwtUtil.isAdmin(authentication, #id)")
     public ResponseEntity<?> getAdminProfile(@PathVariable Long id, Authentication authentication) {
         try {
             AdminDto dto = profileService.getAdminProfileById(id);
@@ -34,7 +34,7 @@ public class ProfileController {
     }
 
     @GetMapping("/student/{id}/profile")
-    @PreAuthorize("hasRole('STUDENT') and #id == authentication.principal.id")
+    @PreAuthorize("@jwtUtil.isStudent(authentication, #id)")
     public ResponseEntity<?> getStudentProfile(@PathVariable Long id, Authentication authentication) {
         try {
             StudentDto dto = profileService.getStudentProfileById(id);
@@ -45,7 +45,7 @@ public class ProfileController {
     }
 
     @GetMapping("/faculty/{id}/profile")
-    @PreAuthorize("hasRole('FACULTY') and #id == authentication.principal.id")
+    @PreAuthorize("@jwtUtil.isFaculty(authentication, #id)")
     public ResponseEntity<?> getFacultyProfile(@PathVariable Long id, Authentication authentication) {
         try {
             FacultyDto dto = profileService.getFacultyProfileById(id);
@@ -56,7 +56,7 @@ public class ProfileController {
     }
 
     @GetMapping("/alumni/{id}/profile")
-    @PreAuthorize("hasRole('ALUMNI') and #id == authentication.principal.id")
+    @PreAuthorize("@jwtUtil.isAlumni(authentication, #id)")
     public ResponseEntity<?> getAlumniProfile(@PathVariable Long id, Authentication authentication) {
         try {
             AlumniDto dto = profileService.getAlumniProfileById(id);

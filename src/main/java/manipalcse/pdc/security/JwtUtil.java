@@ -8,10 +8,12 @@ import javax.crypto.SecretKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -22,7 +24,6 @@ public class JwtUtil {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
     private static final String ROLES_CLAIM = "roles";
     private static final String USERNAME_CLAIM = "preferred_username";
-    private static final int CLOCK_SKEW_SECONDS = 30;
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -65,12 +66,11 @@ public class JwtUtil {
 
         try {
             logger.debug("Validating JWT token");
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(getSigningKey())
-                    .setAllowedClockSkewSeconds(CLOCK_SKEW_SECONDS)
+            Claims claims = Jwts.parser()
+                    .verifyWith(getSigningKey())
                     .build()
-                    .parseClaimsJws(authToken)
-                    .getBody();
+                    .parseSignedClaims(authToken)
+                    .getPayload();
 
             Date expiration = claims.getExpiration();
             Date now = new Date();
@@ -97,11 +97,11 @@ public class JwtUtil {
     public List<String> getRolesFromJwtToken(String token) {
         try {
             logger.debug("Extracting roles from token...");
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(getSigningKey())
+            Claims claims = Jwts.parser()
+                    .verifyWith(getSigningKey())
                     .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .parseSignedClaims(token)
+                    .getPayload();
 
             @SuppressWarnings("unchecked")
             List<String> roles = (List<String>) claims.get(ROLES_CLAIM);
@@ -121,11 +121,11 @@ public class JwtUtil {
     public String getStaffIdFromJwtToken(String token) {
         try {
             logger.debug("Extracting staff ID from token...");
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(getSigningKey())
+            Claims claims = Jwts.parser()
+                    .verifyWith(getSigningKey())
                     .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .parseSignedClaims(token)
+                    .getPayload();
 
             String staffId = claims.getSubject();
             
@@ -154,5 +154,41 @@ public class JwtUtil {
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
-}
 
+    public boolean hasAccess(Authentication authentication, Long pathId, String requiredRole) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return false;
+        }
+
+        Object principal = authentication.getPrincipal();
+        
+        if (principal instanceof Jwt) {
+            Claims claims = (Claims) ((Jwt<?, ?>) principal).getBody();
+            List<String> roles = claims.get(ROLES_CLAIM, List.class);
+            String subjectId = claims.getSubject();
+            
+            return roles != null && 
+                   roles.contains(requiredRole) && 
+                   subjectId != null && 
+                   subjectId.equals(pathId.toString());
+        }
+        return false;
+    }
+
+    // Convenience methods for each role
+    public boolean isAdmin(Authentication authentication, Long pathId) {
+        return hasAccess(authentication, pathId, "ROLE_ADMIN");
+    }
+
+    public boolean isFaculty(Authentication authentication, Long pathId) {
+        return hasAccess(authentication, pathId, "ROLE_FACULTY");
+    }
+
+    public boolean isStudent(Authentication authentication, Long pathId) {
+        return hasAccess(authentication, pathId, "ROLE_STUDENT");
+    }
+
+    public boolean isAlumni(Authentication authentication, Long pathId) {
+        return hasAccess(authentication, pathId, "ROLE_ALUMNI");
+    }
+}
