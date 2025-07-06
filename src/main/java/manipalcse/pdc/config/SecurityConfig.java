@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -57,12 +58,7 @@ public class SecurityConfig {
                 .requestMatchers("/login/**").permitAll()
                 .requestMatchers("/faculty/view").permitAll()
                 .requestMatchers("/register/**").permitAll()
-                //.requestMatchers("/error").permitAll()
-                //.requestMatchers("/actuator/health").permitAll()
                 
-                // Test endpoints
-               // .requestMatchers("/api/test/secured").authenticated()
-               // .requestMatchers("/api/test/faculty-only").hasRole("FACULTY")
                 
                 // Secured endpoints with role-based access
                 .requestMatchers("/faculty/{id}/profile/**").hasAuthority("ROLE_FACULTY")
@@ -70,7 +66,11 @@ public class SecurityConfig {
                 .requestMatchers("/admin/{id}/profile**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/alumni/{id}/profile").hasAuthority("ROLE_ALUMNI")
                 
-                
+                // Add these to the authorizeHttpRequests section
+                .requestMatchers(HttpMethod.PUT, "/admin/{id}/profile/update").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/student/{id}/profile/update").hasAuthority("ROLE_STUDENT")
+                .requestMatchers(HttpMethod.PUT, "/faculty/{id}/profile/update").hasAuthority("ROLE_FACULTY")
+                .requestMatchers(HttpMethod.PUT, "/alumni/{id}/profile/update").hasAuthority("ROLE_ALUMNI")
                 // All other requests need authentication
                 .anyRequest().authenticated()
             )
