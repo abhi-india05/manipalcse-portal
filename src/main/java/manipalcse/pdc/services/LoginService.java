@@ -1,28 +1,12 @@
 
 package manipalcse.pdc.services;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import manipalcse.pdc.dto.LoginResponse;
-import manipalcse.pdc.entity.Admin;
-import manipalcse.pdc.entity.Alumni;
-import manipalcse.pdc.entity.Faculty;
-import manipalcse.pdc.entity.Student;
-import manipalcse.pdc.repository.AdminRepo;
-import manipalcse.pdc.repository.AlumniRepo;
-import manipalcse.pdc.repository.FacultyRepo;
-import manipalcse.pdc.repository.StudentRepo;
-import manipalcse.pdc.security.JwtUtil;
 
 
 @Service
 public class LoginService {
-
+/* 
     @Autowired
     private AdminRepo adminRepo;
 
@@ -90,5 +74,5 @@ public class LoginService {
         } else {
             throw new RuntimeException("User not found");
         }
-    }
+    }*/
 }

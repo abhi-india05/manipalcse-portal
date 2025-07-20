@@ -13,7 +13,6 @@ import manipalcse.pdc.dto.AdminDto;
 import manipalcse.pdc.dto.AlumniDto;
 import manipalcse.pdc.dto.FacultyDto;
 import manipalcse.pdc.dto.StudentDto;
-import manipalcse.pdc.security.JwtUtil;
 import manipalcse.pdc.services.UpdateProfileService;
 
 @RestController
@@ -21,12 +20,10 @@ public class UpdateProfileController {
 
     @Autowired 
     private UpdateProfileService updateProfileService;
-    
-    @Autowired 
-    private JwtUtil jwtUtil;
+  
 
     @PutMapping("/admin/{id}/profile/update")
-    @PreAuthorize("@jwtUtil.isAdmin(authentication, #id)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateAdminProfile(
             @PathVariable Long id, 
             @RequestBody AdminDto adminDto,
@@ -40,7 +37,7 @@ public class UpdateProfileController {
     }
 
     @PutMapping("/student/{id}/profile/update")
-    @PreAuthorize("@jwtUtil.isStudent(authentication, #id)")
+    @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> updateStudentProfile(
             @PathVariable Long id, 
             @RequestBody StudentDto studentDto,
@@ -54,7 +51,7 @@ public class UpdateProfileController {
     }
 
     @PutMapping("/faculty/{id}/profile/update")
-    @PreAuthorize("@jwtUtil.isFaculty(authentication, #id)")
+    @PreAuthorize("hasRole('FACULTY')")
     public ResponseEntity<?> updateFacultyProfile(
             @PathVariable Long id, 
             @RequestBody FacultyDto facultyDto,
@@ -68,7 +65,7 @@ public class UpdateProfileController {
     }
 
     @PutMapping("/alumni/{id}/profile/update")
-    @PreAuthorize("@jwtUtil.isAlumni(authentication, #id)")
+    @PreAuthorize("hasRole('ALUMNI')")
     public ResponseEntity<?> updateAlumniProfile(
             @PathVariable Long id, 
             @RequestBody AlumniDto alumniDto,

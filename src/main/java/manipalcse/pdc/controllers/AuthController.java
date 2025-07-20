@@ -1,20 +1,12 @@
 package manipalcse.pdc.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import manipalcse.pdc.dto.LoginRequest;
-import manipalcse.pdc.dto.LoginResponse;
-import manipalcse.pdc.services.LoginService;
 
 @RestController
 //@RequestMapping("/api/auth")
 public class AuthController {
-
+/*
     @Autowired
     private LoginService loginService;
 
@@ -27,6 +19,7 @@ public class AuthController {
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }
-
+*/
     
+//LOGIN STRATEGY USING JWT REMOVED TO FACILITATE KEYCLOAK IAM
 }

@@ -12,18 +12,16 @@ import manipalcse.pdc.dto.AdminDto;
 import manipalcse.pdc.dto.AlumniDto;
 import manipalcse.pdc.dto.FacultyDto;
 import manipalcse.pdc.dto.StudentDto;
-import manipalcse.pdc.security.JwtUtil;
 import manipalcse.pdc.services.ProfileService;
 
 @RestController
 public class ProfileController {
 
     @Autowired private ProfileService profileService;
-    @Autowired private JwtUtil jwtUtil;
 
 
     @GetMapping("/admin/{id}/profile")
-    @PreAuthorize("@jwtUtil.isAdmin(authentication, #id)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAdminProfile(@PathVariable Long id, Authentication authentication) {
         try {
             AdminDto dto = profileService.getAdminProfileById(id);
@@ -34,7 +32,7 @@ public class ProfileController {
     }
 
     @GetMapping("/student/{id}/profile")
-    @PreAuthorize("@jwtUtil.isStudent(authentication, #id)")
+    @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> getStudentProfile(@PathVariable Long id, Authentication authentication) {
         try {
             StudentDto dto = profileService.getStudentProfileById(id);
@@ -45,7 +43,7 @@ public class ProfileController {
     }
 
     @GetMapping("/faculty/{id}/profile")
-    @PreAuthorize("@jwtUtil.isFaculty(authentication, #id)")
+    @PreAuthorize("hasRole('FACULTY')")
     public ResponseEntity<?> getFacultyProfile(@PathVariable Long id, Authentication authentication) {
         try {
             FacultyDto dto = profileService.getFacultyProfileById(id);
@@ -56,7 +54,7 @@ public class ProfileController {
     }
 
     @GetMapping("/alumni/{id}/profile")
-    @PreAuthorize("@jwtUtil.isAlumni(authentication, #id)")
+    @PreAuthorize("hasRole('ALUMNI')")
     public ResponseEntity<?> getAlumniProfile(@PathVariable Long id, Authentication authentication) {
         try {
             AlumniDto dto = profileService.getAlumniProfileById(id);
